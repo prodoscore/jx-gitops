@@ -1,3 +1,3 @@
-FROM ghcr.io/jenkins-x/jx-cli:latest
+FROM ghcr.io/jenkins-x/jx-boot:3.2.292
 
 COPY ./build/linux/jx-gitops /usr/bin/jx-gitops
