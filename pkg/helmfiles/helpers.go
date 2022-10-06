@@ -40,11 +40,7 @@ func GatherHelmfiles(helmfile, dir string) ([]Helmfile, error) {
 		return nil, errors.Wrapf(err, "failed to load helmfile %s", helmfile)
 	}
 
-	relativePath := strings.Repeat("../", parentHelmfileDepth)
-
-	helmfiles := []Helmfile{
-		{helmfile, relativePath},
-	}
+	helmfiles := []Helmfile{}
 	parentHelmfileDir := filepath.Dir(helmfile)
 
 	for _, nested := range helmState.Helmfiles {
