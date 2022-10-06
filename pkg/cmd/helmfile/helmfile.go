@@ -34,6 +34,7 @@ func NewCmdHelmfile() *cobra.Command {
 	command.AddCommand(cobras.SplitCommand(resolve.NewCmdHelmfileResolve()))
 	command.AddCommand(cobras.SplitCommand(status.NewCmdHelmfileStatus()))
 	command.AddCommand(cobras.SplitCommand(structure.NewCmdHelmfileStructure()))
+	command.AddCommand(cobras.SplitCommand(template.NewCmdHelmfileTemplate()))
 	command.AddCommand(cobras.SplitCommand(validate.NewCmdHelmfileValidate()))
 	return command
 }
