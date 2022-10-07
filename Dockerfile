@@ -1,4 +1,4 @@
-FROM ghcr.io/jenkins-x/jx-boot:latest
+FROM ghcr.io/jenkins-x/jx-boot:3.2.292
 
 ENTRYPOINT ["jx-gitops"]
 
