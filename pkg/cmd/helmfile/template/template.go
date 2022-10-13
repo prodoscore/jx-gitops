@@ -206,9 +206,6 @@ func (o *Options) Run() error {
 
 func (o *Options) buildCommand(helmfile string) *cmdrunner.Command {
 	args := []string{}
-	if o.HelmBinary != "" {
-		args = append(args, "--helm-binary", o.HelmBinary)
-	}
 	if helmfile != "" {
 		args = append(args, "--file", helmfile)
 	}
