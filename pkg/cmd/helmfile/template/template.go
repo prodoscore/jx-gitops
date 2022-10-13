@@ -225,7 +225,7 @@ func (o *Options) buildCommand(helmfile string) *cmdrunner.Command {
 
 	c := &cmdrunner.Command{
 		Dir:                o.Dir,
-		Name:               o.HelmfileBinary,
+		Name:               "helmfile",
 		Args:               args,
 		ExponentialBackOff: backoff.NewExponentialBackOff(),
 		Timeout: 5 * time.Minute,
