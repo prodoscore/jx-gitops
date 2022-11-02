@@ -5,6 +5,11 @@ import (
 	"fmt"
 	"time"
 
+	"path/filepath"
+
+	"github.com/helmfile/helmfile/pkg/state"
+	"github.com/jenkins-x/jx-helpers/v3/pkg/yaml2s"
+
 	"github.com/cenkalti/backoff"
 	"github.com/jenkins-x/jx-helpers/v3/pkg/options"
 	"github.com/jenkins-x/jx-helpers/v3/pkg/termcolor"
@@ -117,7 +122,7 @@ func (o *Options) Validate() error {
 			return errors.Wrapf(err, "failed to download helm plugin")
 		}
 	}
-
+	
 	if o.Dir == "" {
 		o.Dir = "."
 	}
@@ -146,9 +151,14 @@ func (o *Options) Run() error {
 	if o.Parallel != 0 {
 
 	commands := []*cmdrunner.Command{}
-
-	for _, helmfile := range o.Helmfiles {
-		commands = append(commands, o.buildCommand(helmfile.Filepath))
+	helmfile := filepath.Join(o.Dir,o.Helmfile)
+	helmState := state.HelmState{}
+	err := yaml2s.LoadFile(helmfile, &helmState)
+	if err != nil {
+		return errors.Wrapf(err, "failed to load helmfile %s", helmfile)
+	}
+	for _, helmfile := range helmState.Helmfiles {
+		commands = append(commands, o.buildCommand(helmfile.Path))
 
 	}
 	log.Logger().Infof("----------- parallel ---------")
@@ -196,9 +206,6 @@ func (o *Options) Run() error {
 
 func (o *Options) buildCommand(helmfile string) *cmdrunner.Command {
 	args := []string{}
-	if o.HelmBinary != "" {
-		args = append(args, "--helm-binary", o.HelmBinary)
-	}
 	if helmfile != "" {
 		args = append(args, "--file", helmfile)
 	}
@@ -216,9 +223,12 @@ func (o *Options) buildCommand(helmfile string) *cmdrunner.Command {
 		args = append(args, "--validate")
 	}
 
+	args = append(args,"--allow-no-matching-release")
+	args = append(args,"--skip-deps")
+
 	c := &cmdrunner.Command{
 		Dir:                o.Dir,
-		Name:               o.HelmfileBinary,
+		Name:               "helmfile",
 		Args:               args,
 		ExponentialBackOff: backoff.NewExponentialBackOff(),
 		Timeout: 5 * time.Minute,
