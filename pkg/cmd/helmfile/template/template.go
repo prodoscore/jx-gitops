@@ -224,6 +224,7 @@ func (o *Options) buildCommand(helmfile string) *cmdrunner.Command {
 	}
 
 	args = append(args,"--allow-no-matching-release")
+	args = append(args,"--skip-deps")
 
 	c := &cmdrunner.Command{
 		Dir:                o.Dir,
