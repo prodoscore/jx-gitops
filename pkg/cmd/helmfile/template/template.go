@@ -223,6 +223,8 @@ func (o *Options) buildCommand(helmfile string) *cmdrunner.Command {
 		args = append(args, "--validate")
 	}
 
+	args = append(args,"--allow-no-matching-release")
+
 	c := &cmdrunner.Command{
 		Dir:                o.Dir,
 		Name:               "helmfile",
