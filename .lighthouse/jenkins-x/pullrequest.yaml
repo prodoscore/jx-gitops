@@ -7,9 +7,7 @@ spec:
   pipelineSpec:
     tasks:
       - name: from-build-pack
-        resources:
-          requests:
-            ephemeral-storage: "500Mi"
+        resources: {}
         taskSpec:
           metadata: {}
           stepTemplate:
@@ -20,15 +18,26 @@ spec:
           steps:
             - image: uses:jenkins-x/jx3-pipeline-catalog/tasks/git-clone/git-clone-pr.yaml@versionStream
               name: ""
-              resources: {}
+              resources:
+                requests:
+                  ephemeral-storage: "500Mi"
             - name: jx-variables
-              resources: {}
+              resources:
+                requests:
+                  ephemeral-storage: "500Mi"
+
             - name: build-make-linux
-              resources: {}
+              resources:
+                requests:
+                  ephemeral-storage: "500Mi"
             - name: build-make-test
-              resources: {}
+              resources:
+                requests:
+                  ephemeral-storage: "500Mi"
             - name: build-container-build
-              resources: {}
+              resources:
+                requests:
+                  ephemeral-storage: "500Mi"
   podTemplate: {}
   serviceAccountName: tekton-bot
   timeout: 240h0m0s
