@@ -7,7 +7,9 @@ spec:
   pipelineSpec:
     tasks:
       - name: from-build-pack
-        resources: {}
+        resources:
+          requests:
+            ephemeral-storage: "500Mi"
         taskSpec:
           metadata: {}
           stepTemplate:
@@ -22,16 +24,11 @@ spec:
             - name: jx-variables
               resources: {}
             - name: build-make-linux
-              resources:
-                requests:
-                  ephemeral-storage: "500Mi"
               resources: {}
             - name: build-make-test
               resources: {}
             - name: build-container-build
-              resources:
-                requests:
-                  ephemeral-storage: "500Mi"
+              resources: {}
   podTemplate: {}
   serviceAccountName: tekton-bot
   timeout: 240h0m0s
