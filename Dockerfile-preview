@@ -4,6 +4,12 @@ FROM ghcr.io/jenkins-x/jx-boot:3.7.8
 
 COPY ./build/linux/jx-gitops /usr/bin/jx-gitops
 
+
+RUN curl -LO https://github.com/rochana-atapattu/helmfile/releases/download/v0.1001.0/helmfile_0.1001.0_linux_amd64.tar.gz  && \
+    tar -xzvf helmfile_0.1001.0_linux_amd64.tar.gz  && \
+    chmod +x helmfile && \
+    mv helmfile /usr/local/bin/helmfile
+
 ARG CLOUD_SDK_VERSION=405.0.0
 ENV CLOUD_SDK_VERSION=$CLOUD_SDK_VERSION
 ENV PATH /google-cloud-sdk/bin:$PATH
