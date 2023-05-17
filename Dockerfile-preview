@@ -1,6 +1,6 @@
 FROM docker:20.10.12 as static-docker-source
 
-FROM ghcr.io/jenkins-x/jx-boot:3.7.8
+FROM ghcr.io/jenkins-x/jx-boot:3.10.86
 
 COPY ./build/linux/jx-gitops /usr/bin/jx-gitops
 
