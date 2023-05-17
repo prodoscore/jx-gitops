@@ -39,7 +39,6 @@ func GatherHelmfiles(helmfile, dir string) ([]Helmfile, error) {
 	if err != nil {
 		return nil, errors.Wrapf(err, "failed to load helmfile %s", helmfile)
 	}
-
 	relativePath := strings.Repeat("../", parentHelmfileDepth)
 
 	helmfiles := []Helmfile{

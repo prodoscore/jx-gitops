@@ -6,27 +6,38 @@ metadata:
 spec:
   pipelineSpec:
     tasks:
-    - name: from-build-pack
-      resources: {}
-      taskSpec:
-        metadata: {}
-        stepTemplate:
-          image: uses:jenkins-x/jx3-pipeline-catalog/tasks/go-plugin/pullrequest.yaml@versionStream
-          name: ""
-          resources: {}
-          workingDir: /workspace/source
-        steps:
-        - image: uses:jenkins-x/jx3-pipeline-catalog/tasks/git-clone/git-clone-pr.yaml@versionStream
-          name: ""
-          resources: {}
-        - name: jx-variables
-          resources: {}
-        - name: build-make-linux
-          resources: {}
-        - name: build-make-test
-          resources: {}
-        - name: build-container-build
-          resources: {}
+      - name: from-build-pack
+        resources: {}
+        taskSpec:
+          metadata: {}
+          stepTemplate:
+            image: uses:jenkins-x/jx3-pipeline-catalog/tasks/go-plugin/pullrequest.yaml@versionStream
+            name: ""
+            resources: {}
+            workingDir: /workspace/source
+          steps:
+            - image: uses:jenkins-x/jx3-pipeline-catalog/tasks/git-clone/git-clone-pr.yaml@versionStream
+              name: ""
+              resources:
+                requests:
+                  ephemeral-storage: "500Mi"
+            - name: jx-variables
+              resources:
+                requests:
+                  ephemeral-storage: "500Mi"
+
+            - name: build-make-linux
+              resources:
+                requests:
+                  ephemeral-storage: "500Mi"
+            - name: build-make-test
+              resources:
+                requests:
+                  ephemeral-storage: "500Mi"
+            - name: build-container-build
+              resources:
+                requests:
+                  ephemeral-storage: "500Mi"
   podTemplate: {}
   serviceAccountName: tekton-bot
   timeout: 240h0m0s
